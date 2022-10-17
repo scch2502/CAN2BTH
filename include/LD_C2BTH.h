@@ -7,7 +7,27 @@
 class LD_C2BTH
 {
     public:
-        LD_C2BTH();
+        LD_C2BTH()
+        {
+            self->t_config = CAN_TIMING_CONFIG_500KBITS();            //t_config is set to 500kbps 
+    
+            self->g_config = {.mode = CAN_MODE_LISTEN_ONLY, 
+                        .tx_io = TX_GPIO_NUM, 
+                        .rx_io = RX_GPIO_NUM,
+                        .clkout_io =  GPIO_NUM_25, 
+                        .bus_off_io =  GPIO_NUM_25,
+                        .tx_queue_len = 0, 
+                        .rx_queue_len = 10,
+                        .alerts_enabled = CAN_ALERT_NONE,
+                        .clkout_divider = 0};                   //mode is set to listenOnly//set tx queue length to 0 due to listen only mode//rest is default configuration
+            
+            self->f_config = CAN_FILTER_CONFIG_ACCEPT_ALL();           //no filter applied
+
+            deviceConnected = false;
+
+            TCAN = new LD_TCAN(sem, GlobalQueue, deviceConnected);
+            BTH = new LD_BTH(sem, GlobalQueue, deviceConnected);
+        }
 
         static void TaskCAN(void *parameter);
         static void TaskBLE(void *parameter);

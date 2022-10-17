@@ -1,5 +1,6 @@
 #include "LD_C2BTH.h"
 
+/*
 LD_C2BTH::LD_C2BTH()
 {
     self->t_config = CAN_TIMING_CONFIG_500KBITS();            //t_config is set to 500kbps 
@@ -21,6 +22,7 @@ LD_C2BTH::LD_C2BTH()
     TCAN = new LD_TCAN(sem, GlobalQueue, deviceConnected);
     BTH = new LD_BTH(sem, GlobalQueue, deviceConnected);
 }
+*/
 
 
 void LD_C2BTH::TaskCAN(void *parameter)
