@@ -23,7 +23,7 @@
 #include "LD_C2BTH.h"
 
 LD_C2BTH *CAN2BTH = new LD_C2BTH;
-//LD_C2BTH::self{CAN2BTH};
+LD_C2BTH *LD_C2BTH::self{CAN2BTH};
 
 void setup()
 {
@@ -39,7 +39,7 @@ void setup()
 
     //Create multicore Task 
     CAN2BTH->sem = xSemaphoreCreateBinary();
-    xTaskCreatePinnedToCore(LD_C2BTH::TaskCAN(),
+    xTaskCreatePinnedToCore(CAN2BTH->TaskCAN,
                             "CANReader",
                             4096,
                             NULL,
@@ -47,7 +47,7 @@ void setup()
                             &(CAN2BTH->T_CAN),
                             0);
 
-    xTaskCreatePinnedToCore(LD_C2BTH::TaskBLE(),
+    xTaskCreatePinnedToCore(CAN2BTH->TaskBLE,
                             "Mapping",
                             4096,
                             NULL,
